@@ -133,6 +133,11 @@ class AudioTuneApp {
       selectAfter: document.getElementById('select-after'),
       compareGrid: document.getElementById('compare-grid'),
       snapHistoryList: document.getElementById('snap-history-list'),
+
+      // Manual Modal
+      modalManual: document.getElementById('modal-manual'),
+      btnOpenManual: document.getElementById('btn-open-manual'),
+      btnCloseManual: document.getElementById('btn-close-manual'),
     };
   }
 
@@ -141,6 +146,21 @@ class AudioTuneApp {
     this.sensors.onSweepFreqUpdate = (freq) => {
       this.dom.valLfFreq.textContent = `${freq.toFixed(1)} Hz`;
     };
+
+    // Manual Modal
+    if (this.dom.btnOpenManual && this.dom.modalManual) {
+      this.dom.btnOpenManual.addEventListener('click', () => {
+        this.dom.modalManual.classList.remove('hidden');
+      });
+      this.dom.btnCloseManual.addEventListener('click', () => {
+        this.dom.modalManual.classList.add('hidden');
+      });
+      this.dom.modalManual.addEventListener('click', (e) => {
+        if (e.target === this.dom.modalManual) {
+          this.dom.modalManual.classList.add('hidden');
+        }
+      });
+    }
 
     // One-click Activate All
     this.dom.btnActivateAll.addEventListener('click', async () => {
