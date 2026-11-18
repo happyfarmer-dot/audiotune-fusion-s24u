@@ -1,0 +1,57 @@
+/* AudioTune Fusion Web - S24 Ultra Dark Instrument Theme */
+
+:root {
+  --bg-deep: #0b0f19;
+  --bg-card: #111827;
+  --amber: #f59e0b;
+  --cyan: #06b6d4;
+}
+
+html,
+body {
+  background-color: var(--bg-deep);
+  color: #f1f5f9;
+  overscroll-behavior-y: contain;
+  -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+}
+
+.instrument-card {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.96) 0%, rgba(11, 15, 25, 0.98) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  background: #070a12;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* Custom Range Slider */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #1e293b;
+  border-radius: 999px;
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--amber);
+  cursor: pointer;
+  border: 2px solid #0b0f19;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
