@@ -90,6 +90,7 @@ class AudioTuneApp {
       valRt60: document.getElementById('val-rt60'),
       btnMeasureRt60: document.getElementById('btn-measure-rt60'),
       modesList: document.getElementById('standing-modes-list'),
+      advicePhase: document.getElementById('advice-phase'),
 
       // Signal Generator
       genButtons: document.querySelectorAll('[data-gen]'),
@@ -108,6 +109,7 @@ class AudioTuneApp {
       valCabPeakHz: document.getElementById('val-cab-peak-hz'),
       valAccelRate: document.getElementById('val-accel-rate'),
       valUlfDb: document.getElementById('val-ulf-db'),
+      adviceCabinet: document.getElementById('advice-cabinet'),
 
       // Module 3: EMI / Magnetometer
       canvasEmi: document.getElementById('canvas-emi'),
@@ -493,6 +495,34 @@ class AudioTuneApp {
     } else {
       this.dom.modesList.innerHTML = '<span class="text-xs text-slate-500">暫無顯著駐波峰值 (&gt;-75 dBFS)</span>';
     }
+
+    if (this.dom.advicePhase) {
+      const parts = [];
+      if (spec.dbfs < -65) {
+        parts.push('環境聲壓較低，請開啟下方「粉紅噪音」或播放音樂以進行相位偵測。');
+      } else if (isStereo) {
+        const absCm = Math.abs(phaseData.adjustCm);
+        if (absCm < 1.0 && Math.abs(phaseData.doaDeg) < 3.5) {
+          parts.push('<span class="text-emerald-300 font-semibold">✓ 相位已達標 (0° ± 3°)：</span>左右聲道等距對齊！可微調內傾角（Toe-in）聚焦音場。');
+        } else if (phaseData.adjustCm > 0) {
+          parts.push(`<span class="text-amber-300 font-semibold">建議調整：</span>聲像偏左/前，請將<strong>右喇叭往前移約 ${absCm.toFixed(1)} cm</strong>（或左喇叭後退）。`);
+        } else {
+          parts.push(`<span class="text-amber-300 font-semibold">建議調整：</span>聲像偏右/前，請將<strong>左喇叭往前移約 ${absCm.toFixed(1)} cm</strong>（或右喇叭後退）。`);
+        }
+      } else {
+        parts.push(`單聲道模式：目前低中頻相位相干度 <strong>${(phaseData.coherence * 100).toFixed(0)}%</strong>，請優先透過下方低頻駐波峰調整喇叭離牆距離。`);
+      }
+
+      if (spec.modes.length > 0 && spec.modes[0].db > -45) {
+        const topF = spec.modes[0].freq;
+        if (topF <= 85) {
+          parts.push(`偵測到 <strong>${topF.toFixed(0)} Hz</strong> 強低頻駐波：建議將喇叭／重低音<strong>拉離後牆 10–30 cm</strong>，或切換重低音 Phase (0°/180°)。`);
+        } else {
+          parts.push(`偵測到 <strong>${topF.toFixed(0)} Hz</strong> 駐波峰：建議拉開喇叭與側牆距離（&gt; 50 cm）並檢查牆角吸音。`);
+        }
+      }
+      this.dom.advicePhase.innerHTML = parts.join('<br />');
+    }
   }
 
   /* ==================== Canvas 1: Sweet-Spot Phase Compass ==================== */
@@ -726,6 +756,16 @@ class AudioTuneApp {
     }
     this.dom.dampingBadge.textContent = badgeText;
     this.dom.dampingBadge.className = `text-xs px-2.5 py-1 rounded-full border font-medium ${badgeClass}`;
+
+    if (this.dom.adviceCabinet) {
+      if (score >= 85) {
+        this.dom.adviceCabinet.innerHTML = `<span class="text-emerald-300 font-semibold">✓ 抑振達標 (${score} 分)：</span>箱體諧振控制良好，可儲存快照並進入下一步皇帝位擺位。`;
+      } else if (score >= 65) {
+        this.dom.adviceCabinet.innerHTML = `<span class="text-amber-300 font-semibold">尚可改善 (${score} 分，主峰 ${this.sensors.accelPeakHz.toFixed(1)} Hz)：</span>建議於音箱底部加裝角錐墊或橡膠抑振墊，目標拉高至 85 分以上。`;
+      } else {
+        this.dom.adviceCabinet.innerHTML = `<span class="text-rose-300 font-semibold">⚠ 箱體共振明顯 (${score} 分，主峰 ${this.sensors.accelPeakHz.toFixed(1)} Hz)：</span>請檢查角錐是否懸空晃動，建議於重低音下方加墊「黑金石＋避震膠墊」。`;
+      }
+    }
   }
 
   _drawCabinetCanvas() {

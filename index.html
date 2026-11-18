@@ -150,6 +150,33 @@
             <input id="slider-gen-vol" type="range" min="0" max="100" value="35" class="w-full" />
           </div>
         </div>
+
+        <!-- Tab 1 Live Tuning Guide & Target Values -->
+        <div class="instrument-card rounded-2xl p-3 space-y-2 border-cyan-500/30">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-cyan-300">🎯 皇帝位調音目標與即時擺位建議</h3>
+            <span class="text-[10px] text-slate-400">邊測邊調</span>
+          </div>
+          <div id="advice-phase" class="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-xs text-slate-200 leading-relaxed">
+            啟動麥克風並播放「粉紅噪音」後，系統會即時給出喇叭前後／左右移動建議。
+          </div>
+          <div class="grid grid-cols-1 gap-1.5 text-[11px] text-slate-300 pt-1">
+            <div class="flex justify-between border-b border-slate-800 pb-1">
+              <span class="text-slate-400">相位到達角 / 時間差</span>
+              <span class="font-mono text-emerald-400">目標：0° ± 3° / Δt &lt; 0.05 ms</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-800 pb-1">
+              <span class="text-slate-400">房間殘響時間 RT60</span>
+              <span class="font-mono text-emerald-400">劇院 0.30–0.45s | 音樂 0.40–0.60s</span>
+            </div>
+            <div class="text-slate-400 leading-relaxed pt-0.5">
+              <strong class="text-amber-400">擺位調整口訣：</strong><br />
+              • <strong>40–80 Hz 駐波轟鳴</strong>：喇叭離後牆太近，將左右喇叭同步往前拉 <code class="text-cyan-300">10–30 cm</code>。<br />
+              • <strong>人聲偏左/偏右</strong>：將距離較近那側的喇叭往後退，或增加擴大機 Distance 延遲。<br />
+              • <strong>結像不夠凝聚</strong>：微調喇叭內傾角（Toe-in）使高音單體指向皇帝位雙耳。
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ==================== TAB 2: 箱體諧振 ==================== -->
@@ -195,6 +222,20 @@
             <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800">
               <div class="text-[10px] text-slate-400">超低頻聲壓包絡 (15–150Hz)</div>
               <div id="val-ulf-db" class="text-sm font-semibold text-emerald-400 font-mono tabular-nums">-- dB</div>
+            </div>
+          </div>
+
+          <!-- Tab 2 Tuning Guide -->
+          <div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-1.5 text-[11px] text-slate-300 leading-relaxed">
+            <div class="flex justify-between font-semibold">
+              <span class="text-amber-300">🎯 目標：抑振評分 ≥ 85 分 | RMS &lt; 0.015 G</span>
+            </div>
+            <div id="advice-cabinet" class="text-slate-200">
+              請將手機平放於音箱頂部，切回「相位與駐波」開啟低頻掃描（30–200 Hz）或播放重低音測試片段。
+            </div>
+            <div class="text-slate-400 pt-0.5">
+              • <strong>&lt; 75 分</strong>：箱體振動嚴重傳導至地面，建議加裝<strong>金屬角錐＋角錐墊</strong>或於重低音下方墊<strong>黑金石＋避震膠墊</strong>。<br />
+              • <strong>特定共鳴主頻偏高</strong>：代表該頻率箱體板材共振明顯，可微調重低音分頻點或於箱頂壓放阻尼重物。
             </div>
           </div>
         </div>
@@ -264,11 +305,32 @@
           <div id="mag-flag-hint" class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200/90 leading-relaxed">
             <strong>💡 進階原始 µT 數值提示：</strong>目前 Chrome 預設環境已自動啟用「絕對地磁羅盤偏轉備援引擎」開箱即用。若需讀取原始三軸微特斯拉 (µT) 數據，可於 S24 Ultra Chrome 網址列輸入 <code class="px-1 py-0.5 rounded bg-slate-900 text-cyan-300">chrome://flags/#enable-generic-sensor-extra-classes</code> 設為 Enabled 並重啟瀏覽器。
           </div>
+
+          <!-- Tab 3 Tuning Guide -->
+          <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1 text-[11px] text-slate-300 leading-relaxed">
+            <div class="font-semibold text-cyan-300">🎯 目標：訊號線周邊 EMI 指數 &lt; 25（安全區）</div>
+            <div class="text-slate-400">
+              • <strong>電源線與訊號線分離</strong>：RCA / XLR 訊號線與喇叭線請距離變壓器或電源排插至少 <code class="text-cyan-300">15–30 cm</code>。<br />
+              • <strong>避免平行捆綁</strong>：若空間受限必須交會，請讓訊號線與電源線呈 <strong>90° 垂直交叉</strong>。<br />
+              • <strong>器材疊放順序</strong>：高耗電後級擴大機（大變壓器）勿緊貼前級或 DAC 正下方。
+            </div>
+          </div>
         </div>
       </section>
 
       <!-- ==================== TAB 4: 調音對比 ==================== -->
       <section data-panel="compare" class="hidden space-y-3">
+        <!-- 4-Step Tuning SOP -->
+        <div class="instrument-card rounded-2xl p-3 space-y-1.5 border-emerald-500/30">
+          <h2 class="text-xs font-bold text-emerald-300">📋 音響室調音標準四步驟（建議順序）</h2>
+          <ol class="text-[11px] text-slate-300 space-y-1 list-decimal list-inside leading-relaxed">
+            <li><strong>漏磁隔離（Tab 3）</strong>：先掃描機櫃電源與訊號線，確保 EMI &lt; 25 排除底噪。</li>
+            <li><strong>箱體抑振（Tab 2）</strong>：調整角錐或黑金石墊材，讓抑振評分達 <strong>≥ 85 分</strong>。</li>
+            <li><strong>皇帝位擺位（Tab 1）</strong>：拉離後牆壓低 20–250 Hz 駐波，對齊相位 <strong>0° ± 3°（Δt &lt; 0.05 ms）</strong>。</li>
+            <li><strong>殘響與對比（Tab 1 &amp; 4）</strong>：測 RT60 落在 <strong>0.30–0.55 s</strong>，儲存快照驗收前後差異！</li>
+          </ol>
+        </div>
+
         <!-- Save Snapshot -->
         <div class="instrument-card rounded-2xl p-3 space-y-2.5">
           <h2 class="text-sm font-bold text-slate-100">儲存當前音響室調音快照</h2>

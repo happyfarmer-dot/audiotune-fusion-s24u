@@ -1,4 +1,4 @@
-const CACHE_NAME = 'audiotune-fusion-s24u-v1';
+const CACHE_NAME = 'audiotune-fusion-s24u-v2';
 const CORE_ASSETS = [
   './',
   './index.html',
